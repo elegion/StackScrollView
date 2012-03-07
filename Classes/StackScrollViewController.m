@@ -39,7 +39,8 @@
 #import "StackScrollViewController.h"
 #import "UIViewWithShadow.h"
 
-const NSInteger SLIDE_VIEWS_MINUS_X_POSITION = -130;
+const NSInteger SLIDE_VIEWS_MINUS_X_POSITION = 0;
+const NSInteger SLIDE_VIEWS_OVERLAY_X_POSITION = 20;
 const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 
 @implementation StackScrollViewController
@@ -702,13 +703,13 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	
 	[viewControllersStack addObject:controller];
 	if (invokeByController !=nil) {
-		viewXPosition = invokeByController.view.frame.origin.x + invokeByController.view.frame.size.width;			
+		viewXPosition = CGRectGetMaxX(invokeByController.view.frame);			
 	}
 	if ([[slideViews subviews] count] == 0) {
 		slideStartPosition = SLIDE_VIEWS_START_X_POS;
 		viewXPosition = slideStartPosition;
 	}
-	[[controller view] setFrame:CGRectMake(viewXPosition, 0, [controller view].frame.size.width, self.view.frame.size.height)];
+	[controller.view setFrame:CGRectMake(CGRectGetMaxX(self.view.frame), 0, CGRectGetWidth(controller.view.frame), CGRectGetHeight(self.view.frame))];
 	
 	[controller.view setTag:(10000+[viewControllersStack count]-1)];
 	[controller viewWillAppear:FALSE];
@@ -720,6 +721,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		
 		if ([[slideViews subviews] count]==1) {
 			viewAtLeft = [[slideViews subviews] objectAtIndex:[[slideViews subviews] count]-1];
+            viewAtLeft.frame = CGRectMake(SLIDE_VIEWS_START_X_POS, CGRectGetMinY(viewAtLeft.frame), CGRectGetWidth(viewAtLeft.frame), CGRectGetHeight(viewAtLeft.frame));
 			viewAtLeft2 = nil;
 			viewAtRight = nil;
 			viewAtRight2 = nil;
@@ -734,7 +736,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 			[UIView setAnimationTransition:UIViewAnimationTransitionNone forView:viewAtLeft cache:YES];	
 			[UIView setAnimationBeginsFromCurrentState:NO];	
 			[viewAtLeft setFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION, viewAtLeft.frame.origin.y, viewAtLeft.frame.size.width, viewAtLeft.frame.size.height)];
-			[viewAtRight setFrame:CGRectMake(self.view.frame.size.width - viewAtRight.frame.size.width, viewAtRight.frame.origin.y, viewAtRight.frame.size.width, viewAtRight.frame.size.height)];
+			[viewAtRight setFrame:CGRectMake(viewXPosition, viewAtRight.frame.origin.y, viewAtRight.frame.size.width, viewAtRight.frame.size.height)];
 			[UIView commitAnimations];
 			slideStartPosition = SLIDE_VIEWS_MINUS_X_POSITION;
 			
@@ -754,8 +756,8 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
                 if (viewAtLeft2.frame.origin.x != SLIDE_VIEWS_MINUS_X_POSITION) {
                     [viewAtLeft2 setFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION, viewAtLeft2.frame.origin.y, viewAtLeft2.frame.size.width, viewAtLeft2.frame.size.height)];
                 }
-                [viewAtLeft setFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION, viewAtLeft.frame.origin.y, viewAtLeft.frame.size.width, viewAtLeft.frame.size.height)];
-				[viewAtRight setFrame:CGRectMake(self.view.frame.size.width - viewAtRight.frame.size.width, viewAtRight.frame.origin.y, viewAtRight.frame.size.width, viewAtRight.frame.size.height)];
+                [viewAtLeft setFrame:CGRectMake(CGRectGetMinX(viewAtLeft2.frame) + SLIDE_VIEWS_OVERLAY_X_POSITION, viewAtLeft.frame.origin.y, viewAtLeft.frame.size.width, viewAtLeft.frame.size.height)];
+				[viewAtRight setFrame:CGRectMake(viewXPosition, viewAtRight.frame.origin.y, viewAtRight.frame.size.width, viewAtRight.frame.size.height)];
 				[UIView setAnimationDelegate:self];
 				[UIView setAnimationDidStopSelector:@selector(bounceBack:finished:context:)];
 				[UIView commitAnimations];				
