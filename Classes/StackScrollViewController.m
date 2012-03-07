@@ -37,7 +37,7 @@
 //
 
 #import "StackScrollViewController.h"
-#import "UIViewWithShadow.h";
+#import "UIViewWithShadow.h"
 
 const NSInteger SLIDE_VIEWS_MINUS_X_POSITION = -130;
 const NSInteger SLIDE_VIEWS_START_X_POS = 0;
@@ -333,8 +333,8 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 							
 							if (viewControllerCount > 1) {
 								for (int i = 1; i < viewControllerCount; i++) {
-									viewXPosition = self.view.frame.size.width - [slideViews viewWithTag:i].frame.size.width;
-									[[slideViews viewWithTag:i] removeFromSuperview];
+									viewXPosition = self.view.frame.size.width - [slideViews viewWithTag:10000+i].frame.size.width;
+									[[slideViews viewWithTag:10000+i] removeFromSuperview];
 									[viewControllersStack removeLastObject];
 								}
 								
@@ -436,8 +436,8 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 							NSInteger viewControllerCount = [viewControllersStack count];
 							if (viewControllerCount > 1) {
 								for (int i = 1; i < viewControllerCount; i++) {
-									viewXPosition = self.view.frame.size.width - [slideViews viewWithTag:i].frame.size.width;
-									[[slideViews viewWithTag:i] removeFromSuperview];
+									viewXPosition = self.view.frame.size.width - [slideViews viewWithTag:10000+i].frame.size.width;
+									[[slideViews viewWithTag:10000+i] removeFromSuperview];
 									[viewControllersStack removeLastObject];
 								}
 								[[borderViews viewWithTag:3] setHidden:TRUE];
@@ -679,7 +679,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		
 		NSInteger viewControllerCount = [viewControllersStack count];
 		for (int i = indexOfViewController; i < viewControllerCount; i++) {
-			[[slideViews viewWithTag:i] removeFromSuperview];
+			[[slideViews viewWithTag:10000+i] removeFromSuperview];
 			[viewControllersStack removeObjectAtIndex:indexOfViewController];
 			viewXPosition = self.view.frame.size.width - [controller view].frame.size.width;
 		}
@@ -710,7 +710,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	}
 	[[controller view] setFrame:CGRectMake(viewXPosition, 0, [controller view].frame.size.width, self.view.frame.size.height)];
 	
-	[controller.view setTag:([viewControllersStack count]-1)];
+	[controller.view setTag:(10000+[viewControllersStack count]-1)];
 	[controller viewWillAppear:FALSE];
 	[controller viewDidAppear:FALSE];
 	[slideViews addSubview:[controller view]];
