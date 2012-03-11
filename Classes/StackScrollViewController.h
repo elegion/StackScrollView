@@ -38,6 +38,13 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol StackAnimation <NSObject>
+
+//Space that wont be hidden by new controller by new controller push over this;
+- (CGFloat)mandatoryVisibleSpace;
+
+@end
+
 
 @interface StackScrollViewController :  UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate> {
 	

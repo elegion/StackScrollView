@@ -707,7 +707,15 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	
 	[viewControllersStack addObject:controller];
 	if (invokeByController !=nil) {
-		viewXPosition = CGRectGetMaxX(invokeByController.view.frame);			
+		viewXPosition = CGRectGetMaxX(invokeByController.view.frame);
+        if (CGRectGetWidth(self.view.frame) - CGRectGetMaxX(invokeByController.view.frame) < CGRectGetWidth(controller.view.frame)) {
+            if ([invokeByController respondsToSelector:@selector(mandatoryVisibleSpace)]) {
+                viewXPosition = CGRectGetMinX(invokeByController.view.frame) + [(id<StackAnimation>)invokeByController  mandatoryVisibleSpace]; 
+            } else {
+                viewXPosition = SLIDE_VIEWS_OVERLAY_X_POSITION;
+            }
+        }
+        
 	}
 	if ([[slideViews subviews] count] == 0) {
 		slideStartPosition = SLIDE_VIEWS_START_X_POS;
