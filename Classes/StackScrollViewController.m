@@ -668,7 +668,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		[viewControllersStack removeAllObjects];
 	}
 	
-	
+	BOOL isNeedAnimateSlide = YES;
 	if([viewControllersStack count] > 1){
 		NSInteger indexOfViewController = [viewControllersStack
 										   indexOfObject:invokeByController]+1;
@@ -677,6 +677,10 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 			indexOfViewController = [viewControllersStack
 									 indexOfObject:[invokeByController parentViewController]]+1;
 		}
+        
+        if (indexOfViewController < [viewControllersStack count]) {
+            isNeedAnimateSlide = NO;
+        }
 		
 		NSInteger viewControllerCount = [viewControllersStack count];
 		for (int i = indexOfViewController; i < viewControllerCount; i++) {
@@ -731,13 +735,16 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 			viewAtLeft = [[slideViews subviews] objectAtIndex:[[slideViews subviews] count]-2];
 			viewAtLeft2 = nil;
 			viewAtRight2 = nil;
-			
-			[UIView beginAnimations:nil context:NULL];
-			[UIView setAnimationTransition:UIViewAnimationTransitionNone forView:viewAtLeft cache:YES];	
-			[UIView setAnimationBeginsFromCurrentState:NO];	
-			[viewAtLeft setFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION, viewAtLeft.frame.origin.y, viewAtLeft.frame.size.width, viewAtLeft.frame.size.height)];
+			if (isNeedAnimateSlide) {
+                [UIView beginAnimations:nil context:NULL];
+                [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:viewAtLeft cache:YES];	
+                [UIView setAnimationBeginsFromCurrentState:NO];	
+            }
+            [viewAtLeft setFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION, viewAtLeft.frame.origin.y, viewAtLeft.frame.size.width, viewAtLeft.frame.size.height)];
 			[viewAtRight setFrame:CGRectMake(viewXPosition, viewAtRight.frame.origin.y, viewAtRight.frame.size.width, viewAtRight.frame.size.height)];
-			[UIView commitAnimations];
+            if (isNeedAnimateSlide) {
+                [UIView commitAnimations];
+            }
 			slideStartPosition = SLIDE_VIEWS_MINUS_X_POSITION;
 			
 		}else {
@@ -748,25 +755,27 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 				viewAtLeft2 = [[slideViews subviews] objectAtIndex:[[slideViews subviews] count]-3];
 				[viewAtLeft2 setHidden:FALSE];
 				viewAtRight2 = nil;
-				
-				[UIView beginAnimations:nil context:NULL];
+            if (isNeedAnimateSlide) {
+                [UIView beginAnimations:nil context:NULL];
 				[UIView setAnimationTransition:UIViewAnimationTransitionNone forView:viewAtLeft cache:YES];	
 				[UIView setAnimationBeginsFromCurrentState:NO];	
-				
+            }
+                        
                 if (viewAtLeft2.frame.origin.x != SLIDE_VIEWS_MINUS_X_POSITION) {
                     [viewAtLeft2 setFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION, viewAtLeft2.frame.origin.y, viewAtLeft2.frame.size.width, viewAtLeft2.frame.size.height)];
                 }
                 [viewAtLeft setFrame:CGRectMake(CGRectGetMinX(viewAtLeft2.frame) + SLIDE_VIEWS_OVERLAY_X_POSITION, viewAtLeft.frame.origin.y, viewAtLeft.frame.size.width, viewAtLeft.frame.size.height)];
 				[viewAtRight setFrame:CGRectMake(viewXPosition, viewAtRight.frame.origin.y, viewAtRight.frame.size.width, viewAtRight.frame.size.height)];
-				[UIView setAnimationDelegate:self];
+            if (isNeedAnimateSlide) {
+                [UIView setAnimationDelegate:self];
 				[UIView setAnimationDidStopSelector:@selector(bounceBack:finished:context:)];
 				[UIView commitAnimations];				
-				slideStartPosition = SLIDE_VIEWS_MINUS_X_POSITION;	
+
+            }
+                slideStartPosition = SLIDE_VIEWS_MINUS_X_POSITION;	
 				if([[slideViews subviews] count] > 3){
 					[[[slideViews subviews] objectAtIndex:[[slideViews subviews] count]-4] setHidden:TRUE];		
 				}
-			
-			
 		}
 	}
 }
