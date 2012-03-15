@@ -45,6 +45,7 @@
 
 @end
 
+@protocol StackControllerDelegate;
 
 @interface StackScrollViewController :  UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate> {
 	
@@ -81,7 +82,15 @@
 @property (nonatomic, retain) UIView* borderViews;
 @property (nonatomic, assign) CGFloat slideStartPosition;
 @property (nonatomic, assign) NSMutableArray* viewControllersStack;
+@property (nonatomic, assign) id<StackControllerDelegate> delegate;
 
+@end
 
+@protocol StackControllerDelegate <NSObject>
+@optional
+
+- (void)stackController:(StackScrollViewController *)stackController didPopController:(UIViewController *)viewController;
+
+- (void)stackController:(StackScrollViewController *)stackController didPushController:(UIViewController *)viewController;
 
 @end
