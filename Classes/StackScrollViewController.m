@@ -69,6 +69,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		[self.view addSubview:borderViews];
 		
 		slideViews = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        slideViews.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[slideViews setBackgroundColor:[UIColor clearColor]];
 		[self.view setBackgroundColor:[UIColor clearColor]];
 		[self.view setFrame:slideViews.frame];
