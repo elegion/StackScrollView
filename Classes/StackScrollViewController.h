@@ -39,7 +39,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol StackAnimation <NSObject>
-
+@required
 //Space that wont be hidden by new controller by new controller push over this;
 - (CGFloat)mandatoryVisibleSpace;
 
