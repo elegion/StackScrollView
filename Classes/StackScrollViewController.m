@@ -919,8 +919,6 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	[controller.view setFrame:CGRectMake(CGRectGetMaxX(self.view.frame), 0, CGRectGetWidth(controller.view.frame), CGRectGetHeight(self.view.frame))];
 	
 	[controller.view setTag:(10000+[viewControllersStack count]-1)];
-	[controller viewWillAppear:FALSE];
-	[controller viewDidAppear:FALSE];
 	[slideViews addSubview:[controller view]];
 	
 	
