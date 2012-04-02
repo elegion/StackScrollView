@@ -520,7 +520,11 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
                             xPosition = CGRectGetMinX(viewAtLeft.frame) + SLIDE_VIEWS_OVERLAY_X_POSITION;
                         }
 						//Show bounce effect
-						[viewAtRight setFrame:CGRectMake(xPosition, viewAtRight.frame.origin.y, viewAtRight.frame.size.width,viewAtRight.frame.size.height)];						
+						[viewAtRight setFrame:CGRectMake(xPosition, viewAtRight.frame.origin.y, viewAtRight.frame.size.width,viewAtRight.frame.size.height)];
+                        UIViewController *ctrl = [viewControllersStack objectAtIndex:[[slideViews subviews] indexOfObject:viewAtLeft]];
+                        if ([ctrl respondsToSelector:@selector(stackController:didPushController:)]) {
+                            [(id<StackControllerDelegate>)ctrl stackController:self didPushController:[viewControllersStack lastObject]];
+                        }
 					}
 					else {
 						[UIView beginAnimations:@"LEFT-WITH-RIGHT" context:nil];
@@ -574,7 +578,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
                             if ([self.delegate respondsToSelector:@selector(stackController:didPopController:)]) {
                                 [self.delegate performSelector:@selector(stackController:didPopController:) withObject:self withObject:[viewControllersStack lastObject]];
                             }
-                            UIViewController *ctrl = [viewControllersStack objectAtIndex:[[slideViews subviews] indexOfObject:viewAtRight]];
+                            UIViewController *ctrl = [viewControllersStack objectAtIndex:[[slideViews subviews] indexOfObject:viewAtLeft]];
                             if ([ctrl respondsToSelector:@selector(stackController:didPopController:)]) {
                                 [(id<StackControllerDelegate>)ctrl stackController:self didPopController:[viewControllersStack lastObject]];
                             }
