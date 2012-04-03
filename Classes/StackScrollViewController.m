@@ -411,6 +411,12 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 								for (int i = 1; i < viewControllerCount; i++) {
 									viewXPosition = self.view.frame.size.width - [slideViews viewWithTag:10000+i].frame.size.width;
 									[[slideViews viewWithTag:10000+i] removeFromSuperview];
+                                    
+                                    if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+                                        [[viewControllersStack lastObject] viewWillDisappear:FALSE];
+                                        [[viewControllersStack lastObject] viewDidDisappear:FALSE];
+                                    }
+                                    
 									[viewControllersStack removeLastObject];
 								}
 								
@@ -587,6 +593,12 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 								for (int i = 1; i < viewControllerCount; i++) {
 									viewXPosition = self.view.frame.size.width - [slideViews viewWithTag:10000+i].frame.size.width;
 									[[slideViews viewWithTag:10000+i] removeFromSuperview];
+                                    
+                                    if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+                                        [[viewControllersStack lastObject] viewWillDisappear:FALSE];
+                                        [[viewControllersStack lastObject] viewDidDisappear:FALSE];
+                                    }
+                                    
 									[viewControllersStack removeLastObject];
 								}
 								[[borderViews viewWithTag:3] setHidden:TRUE];
@@ -860,6 +872,7 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		slideStartPosition = SLIDE_VIEWS_START_X_POS;
 		viewXPosition = slideStartPosition;
 		
+        
 		for (UIView* subview in [slideViews subviews]) {
 			[subview removeFromSuperview];
 		}
@@ -867,7 +880,15 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		[[borderViews viewWithTag:3] setHidden:TRUE];
 		[[borderViews viewWithTag:2] setHidden:TRUE];
 		[[borderViews viewWithTag:1] setHidden:TRUE];
-		[viewControllersStack removeAllObjects];
+
+        if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+            for (UIViewController* vc in viewControllersStack) {
+                //iOS 5+ does this automatically on addSubView
+                [vc viewWillDisappear:FALSE];
+                [vc viewDidDisappear:FALSE];
+            }
+        }
+        [viewControllersStack removeAllObjects];
 	}
 	
 	BOOL isNeedAnimateSlide = YES;
@@ -887,13 +908,29 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		NSInteger viewControllerCount = [viewControllersStack count];
 		for (int i = indexOfViewController; i < viewControllerCount; i++) {
 			[[slideViews viewWithTag:10000+i] removeFromSuperview];
+
+            if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+                [[viewControllersStack objectAtIndex:indexOfViewController] viewWillDisappear:FALSE];
+                [[viewControllersStack objectAtIndex:indexOfViewController] viewDidDisappear:FALSE];
+            }
+
 			[viewControllersStack removeObjectAtIndex:indexOfViewController];
 			viewXPosition = self.view.frame.size.width - [controller view].frame.size.width;
 		}
 	}else if([viewControllersStack count] == 0) {
 		for (UIView* subview in [slideViews subviews]) {
 			[subview removeFromSuperview];
-		}		[viewControllersStack removeAllObjects];
+		}
+		
+        if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+            for (UIViewController* vc in viewControllersStack) {
+                //iOS 5+ does this automatically on addSubView
+                [vc viewWillDisappear:FALSE];
+                [vc viewDidDisappear:FALSE];
+            }
+        }
+        
+        [viewControllersStack removeAllObjects];
 		[[borderViews viewWithTag:3] setHidden:TRUE];
 		[[borderViews viewWithTag:2] setHidden:TRUE];
 		[[borderViews viewWithTag:1] setHidden:TRUE];
@@ -923,7 +960,14 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	[controller.view setFrame:CGRectMake(CGRectGetMaxX(self.view.frame), 0, CGRectGetWidth(controller.view.frame), CGRectGetHeight(self.view.frame))];
 	
 	[controller.view setTag:(10000+[viewControllersStack count]-1)];
-	[slideViews addSubview:[controller view]];
+
+    //iOS 5+ does this automatically on addSubView
+    if (SYSTEM_VERSION_LESS_THAN(@"5.0")) {
+        [controller viewWillAppear:FALSE];
+        [controller viewDidAppear:FALSE];
+    }
+	
+    [slideViews addSubview:[controller view]];
 	
 	
 	if ([[slideViews subviews] count] > 0) {

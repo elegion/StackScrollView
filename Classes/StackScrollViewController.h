@@ -38,6 +38,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 @protocol StackAnimation <NSObject>
 @required
 //Space that wont be hidden by new controller by new controller push over this;
