@@ -869,6 +869,16 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	[super viewWillAppear:animated];
 }
 
+- (void)removeViewInSlider:(UIViewController *)controllerForRemove fromStartPosition:(NSInteger)fromPosition {
+    [UIView beginAnimations:nil context:nil];
+    
+    CGRect polygonFrame = controllerForRemove.view.frame;
+    polygonFrame.origin.x += 615;
+    controllerForRemove.view.frame = polygonFrame;
+    
+    [UIView commitAnimations];
+}
+
 - (void)addViewInSlider:(UIViewController*)controller invokeByController:(UIViewController*)invokeByController isStackStartView:(BOOL)isStackStartView{
 		
 	if (isStackStartView) {
