@@ -660,6 +660,9 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 //                        }
 						[viewAtRight setFrame:CGRectMake(CGRectGetMaxX(viewAtLeft.frame), viewAtRight.frame.origin.y, viewAtRight.frame.size.width,viewAtRight.frame.size.height)];
                         UIViewController *controller = [viewControllersStack objectAtIndex:[slideViews.subviews indexOfObject:viewAtRight]];
+                        if ([viewControllersStack count] == 2) {
+                            controller = [viewControllersStack objectAtIndex:[slideViews.subviews indexOfObject:viewAtLeft]];
+                        }
                         if ([controller respondsToSelector:@selector(stackController:didPopController:)]) {
                             UIViewController *poped = [viewControllersStack objectAtIndex:[slideViews.subviews indexOfObject:viewAtLeft]];
                             [(id<StackControllerDelegate>)controller stackController:self didPopController:poped];
