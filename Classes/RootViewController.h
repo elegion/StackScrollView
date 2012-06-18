@@ -52,10 +52,14 @@
 	MenuViewController* menuViewController;
 	StackScrollViewController* stackScrollViewController;
 	
+    id<UITableViewDelegate> __unsafe_unretained _menuDelegate;
+    id<UITableViewDataSource> __unsafe_unretained _menuDatasource;
 }
 
-@property (nonatomic, retain) MenuViewController* menuViewController;
-@property (nonatomic, retain) StackScrollViewController* stackScrollViewController;
+@property (nonatomic) MenuViewController* menuViewController;
+@property (nonatomic) StackScrollViewController* stackScrollViewController;
+@property (unsafe_unretained, nonatomic) id<UITableViewDelegate> menuDelegate;
+@property (unsafe_unretained, nonatomic) id<UITableViewDataSource> menuDatasource;
 
 
 @end

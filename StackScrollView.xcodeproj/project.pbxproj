@@ -21,6 +21,7 @@
 		C1842D0D1316903C00D1538C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1842D0C1316903C00D1538C /* CoreGraphics.framework */; };
 		C1842D8C131699CA00D1538C /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1842D8B131699CA00D1538C /* DataViewController.m */; };
 		C1D438971317D30A00D5EE69 /* backgroundImage_repeat.png in Resources */ = {isa = PBXBuildFile; fileRef = C1D438961317D30A00D5EE69 /* backgroundImage_repeat.png */; };
+		F91B5816158F462B00606475 /* DataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = F91B5814158F451300606475 /* DataProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		C1842D8A131699CA00D1538C /* DataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
 		C1842D8B131699CA00D1538C /* DataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
 		C1D438961317D30A00D5EE69 /* backgroundImage_repeat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundImage_repeat.png; sourceTree = "<group>"; };
+		F91B5813158F451300606475 /* DataProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataProvider.h; sourceTree = "<group>"; };
+		F91B5814158F451300606475 /* DataProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F91B5813158F451300606475 /* DataProvider.h */,
+				F91B5814158F451300606475 /* DataProvider.m */,
 				C12A8A4D1317769A00E7CA88 /* Extention */,
 				1D3623240D0F684500981E51 /* StackScrollViewAppDelegate.h */,
 				1D3623250D0F684500981E51 /* StackScrollViewAppDelegate.m */,
@@ -207,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F91B5816158F462B00606475 /* DataProvider.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* StackScrollViewAppDelegate.m in Sources */,
 				C1842AEF1316641600D1538C /* RootViewController.m in Sources */,
@@ -224,15 +230,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = StackScrollView_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "StackScrollView-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = StackScrollView;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
@@ -242,12 +249,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = StackScrollView_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "StackScrollView-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = StackScrollView;
 				VALIDATE_PRODUCT = YES;
 			};

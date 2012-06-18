@@ -88,6 +88,8 @@
 
 @implementation RootViewController
 @synthesize menuViewController, stackScrollViewController;
+@synthesize menuDelegate = _menuDelegate;
+@synthesize menuDatasource = _menuDatasource;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 
@@ -109,7 +111,7 @@
 	
 	leftMenuView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, self.view.frame.size.height)];
 	leftMenuView.autoresizingMask = UIViewAutoresizingFlexibleHeight;	
-	menuViewController = [[MenuViewController alloc] initWithFrame:CGRectMake(0, 0, leftMenuView.frame.size.width, leftMenuView.frame.size.height)];
+	menuViewController = [[MenuViewController alloc] initWIthFrame:CGRectMake(0, 0, leftMenuView.frame.size.width, leftMenuView.frame.size.height) datasource:_menuDatasource delegate:_menuDelegate];
 	[menuViewController.view setBackgroundColor:[UIColor clearColor]];
 	[menuViewController viewWillAppear:FALSE];
 	[menuViewController viewDidAppear:FALSE];
@@ -156,8 +158,5 @@
 }
 
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 @end
