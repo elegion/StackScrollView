@@ -38,6 +38,7 @@
 
 #import "StackScrollViewAppDelegate.h"
 #import "RootViewController.h"
+#import "DataProvider.h"
 @implementation StackScrollViewAppDelegate
 
 @synthesize window;
@@ -56,6 +57,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 
 	rootViewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    DataProvider * data = [[DataProvider alloc] init];
+    rootViewController.menuDatasource = data;
+    rootViewController.menuDelegate = data;
 	[self.window setBackgroundColor:[UIColor clearColor]];
     [self.window addSubview:rootViewController.view];
     [self.window makeKeyAndVisible];
@@ -97,11 +101,6 @@
 }
 
 
-- (void)dealloc {
-    [rootViewController release];
-    [window release];
-    [super dealloc];
-}
 
 
 @end

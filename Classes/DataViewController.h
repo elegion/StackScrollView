@@ -45,6 +45,6 @@
 - (id)initWithFrame:(CGRect)frame;
 
 
-@property(nonatomic, retain)UITableView* tableView;
+@property(nonatomic)UITableView* tableView;
 
 @end

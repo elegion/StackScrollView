@@ -39,11 +39,15 @@
 #import <UIKit/UIKit.h> 
 
 
-@interface MenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface MenuViewController : UIViewController {
 	UITableView*  _tableView;
+    id<UITableViewDelegate> _delegate;
+    id<UITableViewDataSource> _datasource;
 }
-- (id)initWithFrame:(CGRect)frame;
+- (id) initWIthFrame:(CGRect) frame datasource:(id<UITableViewDataSource>) datasource delegate:(id<UITableViewDelegate>) delegate;
 
-@property(nonatomic, retain)UITableView* tableView;
+@property(nonatomic)UITableView* tableView;
+@property(nonatomic,strong) id<UITableViewDelegate> delegate;
+@property(nonatomic,strong) id<UITableViewDataSource> datasource;
 
 @end

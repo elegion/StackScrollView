@@ -47,8 +47,8 @@
 
 + (StackScrollViewAppDelegate *) instance;
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) RootViewController *rootViewController;
+@property (nonatomic) IBOutlet UIWindow *window;
+@property (nonatomic) RootViewController *rootViewController;
 
 @end
 

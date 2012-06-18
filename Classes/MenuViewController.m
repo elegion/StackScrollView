@@ -44,23 +44,32 @@
 
 @implementation MenuViewController
 @synthesize tableView = _tableView;
+@synthesize datasource = _datasource;
+@synthesize delegate = _delegate;
 
 
 #pragma mark -
 #pragma mark View lifecycle
+
+- (id) initWIthFrame:(CGRect) frame datasource:(id<UITableViewDataSource>) datasource delegate:(id<UITableViewDelegate>) delegate{
+    if (self = [super init]) {
+        _datasource = datasource;
+        _delegate = delegate;
+    }
+    return [self initWithFrame:frame];
+}
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super init]) {
 		[self.view setFrame:frame]; 
 		
 		_tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-		[_tableView setDelegate:self];
-		[_tableView setDataSource:self];
+		[_tableView setDelegate:self.delegate];
+		[_tableView setDataSource:self.datasource];
 		[_tableView setBackgroundColor:[UIColor clearColor]];
         
         UIView* footerView =  [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
 		_tableView.tableFooterView = footerView;
-        [footerView release];
         
 		[self.view addSubview:_tableView];
 		
@@ -69,7 +78,6 @@
 		[verticalLineView setBackgroundColor:[UIColor whiteColor]];
 		[self.view addSubview:verticalLineView];
 		[self.view bringSubviewToFront:verticalLineView];
-        [verticalLineView release];
 		
 	}
     return self;
@@ -100,51 +108,6 @@
 }
 
 
-#pragma mark -
-#pragma mark Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 1;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return 10;
-}
-
-
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		UIView* bgView = [[[UIView alloc] init] autorelease];
-		[bgView setBackgroundColor:[UIColor colorWithWhite:2 alpha:0.2]];
-		[cell setSelectedBackgroundView:bgView];
-    }
-    
-    // Configure the cell...
-	cell.textLabel.text = [NSString stringWithFormat:@"Menu %d", indexPath.row +1];
-	[cell.textLabel setTextColor:[UIColor whiteColor]];
-
-
-    return cell;
-}
-
-
-#pragma mark -
-#pragma mark Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DataViewController *dataViewController = [[DataViewController alloc] initWithFrame:CGRectMake(0, 0, 477, self.view.frame.size.height)];
-	[[StackScrollViewAppDelegate instance].rootViewController.stackScrollViewController addViewInSlider:dataViewController invokeByController:self isStackStartView:TRUE];
-	[dataViewController release];
-}
-
 
 #pragma mark -
 #pragma mark Memory management
@@ -157,10 +120,6 @@
 }
 
 
-- (void)dealloc {
-    [_tableView release];
-    [super dealloc];
-}
 
 
 @end

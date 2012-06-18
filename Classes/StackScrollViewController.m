@@ -54,13 +54,13 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		viewControllersStack = [[NSMutableArray alloc] init]; 
 		borderViews = [[UIView alloc] initWithFrame:CGRectMake(SLIDE_VIEWS_MINUS_X_POSITION - 2, -2, 2, self.view.frame.size.height)];
 		[borderViews setBackgroundColor:[UIColor clearColor]];
-		UIView* verticalLineView1 = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, borderViews.frame.size.height)] autorelease];
+		UIView* verticalLineView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, borderViews.frame.size.height)];
 		[verticalLineView1 setBackgroundColor:[UIColor whiteColor]];
 		[verticalLineView1 setTag:1];
 		[verticalLineView1 setHidden:TRUE];
 		[borderViews addSubview:verticalLineView1];
 		
-		UIView* verticalLineView2 = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, borderViews.frame.size.height)] autorelease];
+		UIView* verticalLineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2, borderViews.frame.size.height)];
 		[verticalLineView2 setBackgroundColor:[UIColor grayColor]];
 		[verticalLineView2 setTag:2];
 		[verticalLineView2 setHidden:TRUE];		
@@ -92,7 +92,6 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 		[panRecognizer setDelaysTouchesEnded:TRUE];
 		[panRecognizer setCancelsTouchesInView:TRUE];
 		[self.view addGestureRecognizer:panRecognizer];
-		[panRecognizer release];
 		
 		[self.view addSubview:slideViews];
 		
@@ -1142,11 +1141,6 @@ const NSInteger SLIDE_VIEWS_START_X_POS = 0;
 	}	
 }
 
-- (void)dealloc {
-	[slideViews release];
-	[viewControllersStack release];
-    [super dealloc];
-}
 
 
 @end
